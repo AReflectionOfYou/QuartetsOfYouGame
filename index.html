@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Quartets of You: sort sixteen words into four quartets, from Bass to Soprano. Write your own puzzles." />
+  <meta name="theme-color" content="#5a1a22" />
+  <title>Quartets of You</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect x=%2210%22 y=%2210%22 width=%2280%22 height=%2216%22 rx=%224%22 fill=%22%23F9D3B4%22/><rect x=%2210%22 y=%2232%22 width=%2280%22 height=%2216%22 rx=%224%22 fill=%22%23E3892B%22/><rect x=%2210%22 y=%2254%22 width=%2280%22 height=%2216%22 rx=%224%22 fill=%22%23A3401D%22/><rect x=%2210%22 y=%2276%22 width=%2280%22 height=%2216%22 rx=%224%22 fill=%22%235A1A22%22/></svg>" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="page-bg" class="page-bg" aria-hidden="true"></div>
+  <main class="app">
+    <section class="hero">
+      <h1 id="puzzle-title">Quartets of You</h1>
+      <p id="puzzle-subtitle" class="subtitle">Sort sixteen words into four quartets.</p>
+    </section>
+
+    <!-- ============ Repertoire (puzzle picker) ============ -->
+    <section id="puzzle-list" class="card hidden">
+      <div class="card-header">
+        <h2>Repertoire</h2>
+        <div class="header-actions">
+          <button id="help-btn" type="button" class="quiet-btn">How to play</button>
+          <a class="button-link quiet-btn" href="index.html?compose">Compose</a>
+        </div>
+      </div>
+      <div id="puzzle-links" class="puzzle-links"></div>
+    </section>
+
+    <!-- ============ Game ============ -->
+    <section id="game" class="game hidden" aria-live="polite">
+      <!-- Shown before play starts: choose standard play or the Tutti challenge. -->
+      <div id="start-panel" class="card start-panel hidden">
+        <h2>Ready to perform?</h2>
+        <p>Find the quartets one at a time, or try <strong>Tutti</strong> first: sort all sixteen words into four rows and submit once.</p>
+        <div class="controls">
+          <button id="start-standard-btn" type="button">Begin</button>
+          <button id="start-tutti-btn" type="button" class="secondary">Try Tutti</button>
+        </div>
+      </div>
+
+      <div id="tutti-intro" class="tutti-intro hidden">
+        <strong>Tutti.</strong> Tap two words to swap them. Each row is one quartet. You get one submission; rows you get right carry over.
+      </div>
+
+      <div id="solved-groups" class="solved-groups"></div>
+      <div id="grid" class="grid" aria-label="Puzzle words"></div>
+
+      <div class="status-row">
+        <div id="mistakes" class="mistakes"></div>
+        <div id="message" class="message" role="status"></div>
+      </div>
+
+      <div id="standard-controls" class="controls">
+        <a class="button-link secondary" href="index.html">Repertoire</a>
+        <button id="game-help-btn" type="button" class="quiet-btn">Help</button>
+        <button id="shuffle-btn" type="button" class="secondary">Rehearse</button>
+        <button id="clear-btn" type="button" class="secondary">Clear</button>
+        <button id="submit-btn" type="button" disabled>Submit</button>
+      </div>
+
+      <div id="tutti-controls" class="controls hidden">
+        <button id="tutti-shuffle-btn" type="button" class="secondary">Rehearse</button>
+        <button id="tutti-skip-btn" type="button" class="secondary">Skip Tutti</button>
+        <button id="tutti-submit-btn" type="button">Submit Tutti</button>
+      </div>
+    </section>
+
+    <!-- ============ Results: the concert program ============ -->
+    <section id="end-screen" class="card program hidden">
+      <p class="program-kicker">Tonight's program</p>
+      <h2 id="end-title"></h2>
+      <p id="end-message"></p>
+      <div id="baton-mark" class="baton-mark hidden">
+        <svg viewBox="0 0 64 64" aria-hidden="true" width="40" height="40">
+          <line x1="12" y1="52" x2="54" y2="10" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+          <ellipse cx="14" cy="50" rx="6" ry="4" transform="rotate(-45 14 50)" fill="currentColor" />
+        </svg>
+        <span><strong>Tutti</strong>: every quartet in one take</span>
+      </div>
+      <ol id="end-groups" class="program-list"></ol>
+      <div class="controls">
+        <button id="play-again-btn" type="button">Perform again</button>
+        <a class="button-link secondary" href="index.html">Back to Repertoire</a>
+      </div>
+    </section>
+
+    <!-- ============ Compose ============ -->
+    <section id="compose" class="card compose hidden">
+      <div class="card-header">
+        <h2>Compose</h2>
+        <a class="button-link secondary" href="index.html">Repertoire</a>
+      </div>
+      <p class="muted">Write a puzzle: a title and four groups of four words. Give each group a different voice, from Bass (easiest) to Soprano (hardest).</p>
+
+      <form id="compose-form" novalidate>
+        <div class="field-row">
+          <label class="field">
+            <span>Title</span>
+            <input id="c-title" type="text" required maxlength="80" placeholder="Our Family Reunion" />
+          </label>
+          <label class="field">
+            <span>File name</span>
+            <input id="c-id" type="text" maxlength="60" placeholder="our-family-reunion" pattern="[a-z0-9-]+" />
+            <small class="muted">Lowercase letters, numbers and dashes. Saved as <code id="c-id-preview">puzzle.json</code>.</small>
+          </label>
+        </div>
+        <label class="field">
+          <span>Subtitle <small class="muted">(optional)</small></span>
+          <input id="c-subtitle" type="text" maxlength="140" />
+        </label>
+        <label class="field">
+          <span>Message for a full solve <small class="muted">(optional)</small></span>
+          <input id="c-win" type="text" maxlength="140" />
+        </label>
+
+        <div id="c-groups" class="compose-groups"></div>
+
+        <div id="compose-errors" class="compose-errors hidden" role="alert"></div>
+        <div id="compose-status" class="compose-status hidden" role="status"></div>
+
+        <div class="controls">
+          <button id="c-try-btn" type="button" class="secondary">Try it out</button>
+          <button id="c-folder-btn" type="button" class="secondary hidden">Choose puzzles folder</button>
+          <button id="c-save-btn" type="submit">Save puzzle</button>
+        </div>
+        <p id="c-save-note" class="muted small center"></p>
+      </form>
+    </section>
+
+    <!-- Bravo banner for a perfect Tutti. Visual only, no sound. -->
+    <div id="bravo" class="bravo hidden" aria-live="assertive">
+      <div class="bravo-notes" aria-hidden="true"></div>
+      <div class="bravo-banner">
+        <span class="bravo-word">Bravo!</span>
+        <span class="bravo-sub">All four quartets in one take</span>
+        <button id="bravo-close-btn" type="button">Take a bow</button>
+      </div>
+    </div>
+
+    <div id="details-modal" class="modal hidden">
+      <div class="modal-backdrop"></div>
+      <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="details-text">
+        <p id="details-text"></p>
+        <button id="details-close-btn" type="button">Got it</button>
+      </div>
+    </div>
+
+    <div id="help-modal" class="modal hidden">
+      <div class="modal-backdrop"></div>
+      <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="help-title">
+        <h3 id="help-title">How to play</h3>
+        <ul class="help-list">
+          <li>Each puzzle has 16 words that form <strong>four hidden quartets</strong> of four.</li>
+          <li>Tap four words you think belong together, then tap <strong>Submit</strong>.</li>
+          <li>A wrong guess is a <strong>bum note</strong>. Four bum notes end the performance.</li>
+          <li>If three of your four words belong together, you'll see "One note off…".</li>
+          <li>Quartets are named for voices, from <span class="voice-chip voice-bass">B</span> Bass (easiest) through <span class="voice-chip voice-tenor">T</span> Tenor and <span class="voice-chip voice-alto">A</span> Alto to <span class="voice-chip voice-soprano">S</span> Soprano (hardest).</li>
+          <li><strong>Tutti</strong>: before you start, you can sort all sixteen words into four rows and submit once. Get every row right for a <strong>Bravo!</strong> Any right rows carry over, and play continues as normal.</li>
+          <li><strong>Rehearse</strong> mixes up the board. <strong>Clear</strong> deselects everything.</li>
+          <li>Tap a solved quartet to read its backstory, if it has one.</li>
+        </ul>
+        <button id="help-close-btn" type="button">Got it</button>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <a href="https://github.com/AReflectionOfYou/QuartetsOfYouGame">Quartets of You</a> is open source and part of
+    <a href="https://github.com/AReflectionOfYou">A Reflection of You</a>.
+    Not affiliated with The New York Times.
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

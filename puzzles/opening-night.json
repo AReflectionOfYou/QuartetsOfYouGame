@@ -1,0 +1,31 @@
+{
+  "title": "Opening Night",
+  "subtitle": "A first piece to warm up with. Watch for words that seem to fit two quartets.",
+  "maxMistakes": 4,
+  "winMessage": "A clean first performance. On to the next piece!",
+  "groups": [
+    {
+      "name": "Citrus fruits",
+      "voice": "bass",
+      "words": ["Lemon", "Orange", "Grapefruit", "Kumquat"]
+    },
+    {
+      "name": "Things with keys",
+      "voice": "tenor",
+      "words": ["Piano", "Lock", "Map", "Typewriter"],
+      "details": "A map's key is its legend: the box that explains what each symbol means."
+    },
+    {
+      "name": "___stone",
+      "voice": "alto",
+      "words": ["Lime", "Mile", "Corner", "Brim"],
+      "details": "Limestone, milestone, cornerstone and brimstone. Lime was the decoy: it looks like it belongs with the citrus."
+    },
+    {
+      "name": "Hidden animals",
+      "voice": "soprano",
+      "words": ["Dogma", "Pigment", "Scatter", "Batch"],
+      "details": "DOGma, PIGment, sCATter and BATch."
+    }
+  ]
+}

@@ -1,0 +1,474 @@
+/* Quartets of You: styles.
+ *
+ * Voice colors run warm, from deep (Bass) to bright (Soprano). Each step is
+ * roughly twice as bright as the one before (about 2:1 contrast between
+ * neighbors), so the four voices stay distinct for colorblind players too.
+ * Color is never the only cue: every solved row also carries its voice name
+ * and initial (B, T, A, S).
+ *
+ *   Bass    #5A1A22  oxblood   white text 13:1
+ *   Tenor   #A3401D  rust      white text 6.3:1
+ *   Alto    #E3892B  amber     dark text 6.4:1
+ *   Soprano #F9D3B4  apricot   dark text 12:1
+ */
+
+:root {
+  color-scheme: light;
+  --bg: #f7f1e8;
+  --card: #fffbf5;
+  --ink: #241a17;
+  --muted: #6b5d55;
+  --line: #e4d6c6;
+  --accent: #3b2a35;          /* selected tiles and primary buttons: dark plum, not a voice color */
+  --accent-ink: #ffffff;
+  --accent-soft: #efe4dc;
+  --danger: #8f2a1f;
+  --tile: #ebe3da;
+  --tile-hover: #e3d9ce;
+  --focus: #c25a1f;
+
+  --voice-bass: #5a1a22;
+  --voice-bass-ink: #ffffff;
+  --voice-tenor: #a3401d;
+  --voice-tenor-ink: #ffffff;
+  --voice-alto: #e3892b;
+  --voice-alto-ink: #241a17;
+  --voice-soprano: #f9d3b4;
+  --voice-soprano-ink: #241a17;
+
+  --shadow: 0 10px 30px rgba(60, 30, 20, .09);
+  --radius: 14px;
+  --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-brand: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --bg-image-opacity: .14;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-ui);
+  background: radial-gradient(circle at top, #fffaf3 0, var(--bg) 60%);
+  color: var(--ink);
+}
+
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+.page-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-size: cover;
+  background-position: center;
+  opacity: var(--bg-image-opacity);
+  pointer-events: none;
+}
+
+.app {
+  width: min(940px, 100% - 32px);
+  margin: 0 auto;
+  padding: 28px 0 40px;
+  flex: 1;
+}
+
+.hidden { display: none !important; }
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.muted { color: var(--muted); }
+.small { font-size: .9rem; }
+.center { text-align: center; }
+
+h1, h2, h3 { font-family: var(--font-brand); }
+.hero { text-align: center; margin-bottom: 22px; }
+h1 { margin: 6px 0 10px; font-size: clamp(2.2rem, 6vw, 3.8rem); line-height: 1.05; }
+h2 { margin: 0; font-size: 1.6rem; }
+.subtitle { margin: 0 auto; max-width: 620px; color: var(--muted); font-size: 1.05rem; line-height: 1.5; }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+  padding: 24px;
+  margin: 20px auto;
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.header-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* ---------- Buttons ---------- */
+
+button, .button-link {
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 18px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  line-height: 1.2;
+}
+button[disabled] { opacity: .45; cursor: not-allowed; }
+button.secondary, .button-link.secondary { background: #6f625b; color: #fff; }
+.quiet-btn, .button-link.quiet-btn { background: var(--accent-soft); color: var(--accent); }
+.small-btn { padding: 6px 12px; font-size: .85rem; }
+
+/* ---------- Repertoire ---------- */
+
+.puzzle-links { display: grid; gap: 12px; margin-top: 18px; }
+.puzzle-links a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: var(--radius);
+  background: #fff;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+.puzzle-links a:hover { border-color: var(--voice-tenor); }
+.repertoire-stripe { display: grid; gap: 3px; width: 26px; flex: none; }
+.repertoire-stripe span { display: block; height: 5px; border-radius: 2px; }
+/* Stack Soprano on top, like a score. */
+.repertoire-stripe span:nth-child(1) { order: 4; }
+.repertoire-stripe span:nth-child(2) { order: 3; }
+.repertoire-stripe span:nth-child(3) { order: 2; }
+.repertoire-stripe span:nth-child(4) { order: 1; }
+
+/* ---------- Voices ---------- */
+
+.voice-bass    { background: var(--voice-bass);    color: var(--voice-bass-ink); }
+.voice-tenor   { background: var(--voice-tenor);   color: var(--voice-tenor-ink); }
+.voice-alto    { background: var(--voice-alto);    color: var(--voice-alto-ink); }
+.voice-soprano { background: var(--voice-soprano); color: var(--voice-soprano-ink); }
+
+.voice-badge, .voice-chip {
+  display: inline-grid;
+  place-items: center;
+  width: 1.7em;
+  height: 1.7em;
+  border-radius: 50%;
+  font-family: var(--font-brand);
+  font-weight: 800;
+  font-size: .85rem;
+  line-height: 1;
+  border: 2px solid currentColor;
+}
+/* Inside a colored row the badge inverts, so the letter stands out. */
+.solved-card .voice-badge, .program-item .voice-badge { background: transparent; color: inherit; }
+.voice-chip { width: 1.6em; height: 1.6em; font-size: .78rem; vertical-align: middle; border-color: rgba(0,0,0,.25); }
+
+/* ---------- Game ---------- */
+
+.game { display: grid; gap: 14px; }
+.start-panel { margin: 0; text-align: center; padding: 18px 20px; }
+.start-panel h2 { font-size: 1.3rem; }
+.start-panel p { margin: 8px auto 14px; max-width: 560px; color: var(--muted); line-height: 1.5; }
+
+.tutti-intro {
+  background: var(--accent-soft);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  line-height: 1.45;
+}
+
+.solved-groups { display: grid; gap: 10px; }
+.solved-card {
+  position: relative;
+  border-radius: var(--radius);
+  padding: 14px 16px 14px;
+  text-align: center;
+  font-weight: 800;
+  animation: reveal .35s ease-out;
+}
+.voice-label {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: .72rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.solved-name { display: block; font-size: 1.05rem; padding: 0 70px; }
+.solved-card small { display: block; margin-top: 4px; font-weight: 600; opacity: .85; padding: 0 70px; }
+.has-details { cursor: pointer; }
+.has-details:hover, .has-details:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.details-hint { display: block; margin-top: 6px; font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; opacity: .75; }
+
+@keyframes reveal { from { transform: scale(.97); opacity: 0; } to { transform: none; opacity: 1; } }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.tutti-grid { display: grid; gap: 12px; }
+.tutti-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  padding: 8px;
+  border-radius: calc(var(--radius) + 4px);
+  border: 2px dashed var(--line);
+}
+.tile {
+  min-height: 76px;
+  border: 0;
+  border-radius: var(--radius);
+  padding: 10px;
+  background: var(--tile);
+  color: var(--ink);
+  font-weight: 800;
+  font-size: clamp(.82rem, 2vw, 1.05rem);
+  text-transform: uppercase;
+  letter-spacing: .02em;
+  overflow-wrap: anywhere;
+  transition: transform .08s ease, background .1s ease;
+}
+.tile:hover { background: var(--tile-hover); transform: translateY(-1px); }
+.tile.selected { background: var(--accent); color: var(--accent-ink); }
+
+.status-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  min-height: 28px;
+  color: var(--muted);
+  font-weight: 700;
+}
+.note { font-size: 1.2rem; color: var(--voice-tenor); margin-left: 2px; }
+.note.spent { color: var(--line); }
+.message { color: var(--danger); text-align: right; }
+
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* ---------- Results: concert program ---------- */
+
+.program { text-align: center; }
+.program-kicker {
+  margin: 0 0 6px;
+  font-family: var(--font-brand);
+  font-style: italic;
+  color: var(--muted);
+  letter-spacing: .04em;
+}
+.program h2 { font-size: 2rem; }
+.program > p#end-message { color: var(--muted); }
+.baton-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 4px auto 6px;
+  padding: 6px 14px 6px 8px;
+  border-radius: 999px;
+  border: 2px solid var(--voice-bass);
+  color: var(--voice-bass);
+}
+.program-list {
+  list-style: none;
+  counter-reset: piece;
+  padding: 0;
+  margin: 20px auto;
+  max-width: 640px;
+  text-align: left;
+  display: grid;
+  gap: 10px;
+}
+.program-item {
+  counter-increment: piece;
+  border-radius: var(--radius);
+  padding: 12px 16px;
+}
+.program-head { display: flex; align-items: baseline; gap: 10px; font-weight: 800; }
+.program-head::before {
+  content: counter(piece, upper-roman) ".";
+  font-family: var(--font-brand);
+  min-width: 2.2em;
+}
+.program-voice { display: inline-flex; align-items: center; gap: 6px; text-transform: uppercase; letter-spacing: .08em; font-size: .78rem; }
+.program-dots { flex: 1; border-bottom: 2px dotted currentColor; opacity: .45; transform: translateY(-3px); min-width: 12px; }
+.program-title { font-family: var(--font-brand); font-size: 1.1rem; text-align: right; }
+.program-words { margin: 4px 0 0 2.85rem; font-weight: 600; opacity: .9; }
+.program-note { margin: 4px 0 0 2.85rem; font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; opacity: .8; }
+.program-item.not-performed {
+  background: var(--card);
+  color: var(--muted);
+  border: 2px dashed var(--line);
+}
+.program-item .details-hint { margin-left: 2.85rem; }
+
+/* ---------- Bravo ---------- */
+
+.bravo {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  background: rgba(36, 26, 23, .78);
+  overflow: hidden;
+}
+.bravo-notes span {
+  position: absolute;
+  top: -3rem;
+  color: var(--voice-soprano);
+  animation: fall 3.2s linear infinite;
+}
+.bravo-notes span.voice-text-alto { color: var(--voice-alto); }
+.bravo-notes span.voice-text-tenor { color: #e07a4f; }
+.bravo-notes span.voice-text-bass { color: #fff; }
+@keyframes fall {
+  from { transform: translateY(0) rotate(-10deg); opacity: 1; }
+  to { transform: translateY(110vh) rotate(20deg); opacity: .4; }
+}
+.bravo-banner {
+  position: relative;
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+  padding: 30px 44px;
+  background: var(--card);
+  border-radius: 22px;
+  border: 4px double var(--voice-tenor);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, .4);
+  animation: bow .6s cubic-bezier(.2, 1.4, .4, 1);
+  text-align: center;
+}
+.bravo-word { font-family: var(--font-brand); font-size: clamp(3rem, 12vw, 5.5rem); font-weight: 800; color: var(--voice-bass); line-height: 1; }
+.bravo-sub { color: var(--muted); font-weight: 700; }
+@keyframes bow { from { transform: scale(.6); opacity: 0; } to { transform: none; opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .bravo-notes span, .bravo-banner, .solved-card { animation: none; }
+  .bravo-notes { display: none; }
+}
+
+/* ---------- Compose ---------- */
+
+.compose form { display: grid; gap: 14px; margin-top: 12px; }
+.field { display: grid; gap: 5px; flex: 1; min-width: 0; }
+.field > span { font-weight: 700; font-size: .92rem; }
+.field-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.field-narrow { flex: 0 1 190px; }
+input[type="text"], select, textarea {
+  font: inherit;
+  padding: 10px 12px;
+  border: 1px solid #cdbcab;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--ink);
+  width: 100%;
+}
+textarea { resize: vertical; }
+[aria-invalid="true"] { border-color: var(--danger); box-shadow: 0 0 0 2px rgba(143, 42, 31, .2); }
+.compose-groups { display: grid; gap: 14px; }
+.compose-group {
+  border: 1px solid var(--line);
+  border-left-width: 10px;
+  border-radius: var(--radius);
+  padding: 12px 16px 16px;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+  background: #fff;
+}
+.compose-group legend { font-family: var(--font-brand); font-weight: 700; padding: 0 6px; }
+.voice-edge-bass    { border-left-color: var(--voice-bass); }
+.voice-edge-tenor   { border-left-color: var(--voice-tenor); }
+.voice-edge-alto    { border-left-color: var(--voice-alto); }
+.voice-edge-soprano { border-left-color: var(--voice-soprano); }
+.word-inputs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.compose-errors, .compose-status {
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  line-height: 1.45;
+}
+.compose-errors { background: #fbe9e5; color: var(--danger); border: 1px solid #efc2b9; }
+.compose-errors p, .compose-status p { margin: 0 0 6px; }
+.compose-errors ul { margin: 0; padding-left: 20px; }
+.compose-status.ok { background: #f3ece2; border: 1px solid var(--line); }
+.compose-status.warn { background: #fdf0dc; border: 1px solid #ecc995; }
+.copy-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin: 4px 0 8px; }
+.copy-line { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; font-size: .88rem; overflow-wrap: anywhere; }
+
+/* ---------- Modals ---------- */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 50;
+}
+.modal-backdrop { position: absolute; inset: 0; background: rgba(36, 26, 23, .55); }
+.modal-content {
+  position: relative;
+  width: min(500px, 100%);
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  background: var(--card);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  padding: 26px;
+  text-align: center;
+}
+#details-text { margin: 0 0 20px; line-height: 1.55; font-size: 1.02rem; white-space: pre-line; }
+#help-title { margin: 0 0 14px; font-size: 1.4rem; }
+.help-list { margin: 0 0 22px; padding-left: 22px; text-align: left; line-height: 1.55; }
+.help-list li + li { margin-top: 10px; }
+
+.site-footer {
+  text-align: center;
+  padding: 16px;
+  color: var(--muted);
+  font-size: .85rem;
+}
+.site-footer a { color: inherit; }
+
+@media (max-width: 560px) {
+  .app { padding-top: 18px; }
+  .card { padding: 18px; }
+  .grid { gap: 7px; }
+  .tutti-row { gap: 6px; padding: 6px; }
+  .tile { min-height: 62px; border-radius: 11px; padding: 6px; font-size: .78rem; }
+  .status-row { display: block; text-align: center; }
+  .message { margin-top: 8px; text-align: center; }
+  .voice-label { position: static; transform: none; justify-content: center; margin-bottom: 4px; }
+  .solved-name, .solved-card small { padding: 0; }
+  .word-inputs { grid-template-columns: repeat(2, 1fr); }
+  .program-title { text-align: left; }
+  .program-dots { display: none; }
+  .program-head { flex-wrap: wrap; }
+}

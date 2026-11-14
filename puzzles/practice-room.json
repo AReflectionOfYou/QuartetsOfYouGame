@@ -1,0 +1,31 @@
+{
+  "title": "Practice Room",
+  "subtitle": "A piece with a musical theme, and a few wrong notes waiting for you.",
+  "maxMistakes": 4,
+  "winMessage": "Encore! You read that one at sight.",
+  "groups": [
+    {
+      "name": "Brass instruments",
+      "voice": "bass",
+      "words": ["Trumpet", "Trombone", "Tuba", "Horn"]
+    },
+    {
+      "name": "Tempo markings",
+      "voice": "tenor",
+      "words": ["Allegro", "Largo", "Presto", "Adagio"],
+      "details": "From slow to fast: largo, adagio, allegro, presto."
+    },
+    {
+      "name": "___note",
+      "voice": "alto",
+      "words": ["Foot", "Bank", "Key", "Love"],
+      "details": "Footnote, banknote, keynote and love note."
+    },
+    {
+      "name": "Things that can be sharp",
+      "voice": "soprano",
+      "words": ["Cheddar", "Knife", "Wit", "Turn"],
+      "details": "A sharp cheddar, a sharp knife, a sharp wit and a sharp turn. In music, of course, a note can be sharp too."
+    }
+  ]
+}
