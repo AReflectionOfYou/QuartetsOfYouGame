@@ -979,6 +979,16 @@ document.addEventListener("keydown", event => {
   if (!el.helpModal.classList.contains("hidden")) closeHelpModal();
 });
 
+// About: a small dialog with the copyright and licenses. It only opens and
+// closes; it never touches game state, timers or storage.
+const aboutDialog = $("about-dialog");
+$("about-btn").addEventListener("click", () => aboutDialog.showModal());
+$("about-close-btn").addEventListener("click", () => aboutDialog.close());
+aboutDialog.addEventListener("click", event => {
+  // The content fills the dialog box, so a click on the dialog itself is the backdrop.
+  if (event.target === aboutDialog) aboutDialog.close();
+});
+
 if (qs.has("compose")) {
   showCompose();
 } else if (!puzzleId) {

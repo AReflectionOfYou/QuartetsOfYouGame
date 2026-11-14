@@ -171,7 +171,21 @@
     <a href="https://github.com/AReflectionOfYou/QuartetsOfYouGame">Quartets of You</a> is open source and part of
     <a href="https://github.com/AReflectionOfYou">A Reflection of You</a>.
     Not affiliated with The New York Times.
+    <span aria-hidden="true">&middot;</span>
+    <button id="about-btn" type="button" class="about-link" aria-haspopup="dialog">About</button>
   </footer>
+
+  <dialog id="about-dialog" class="about-dialog" aria-label="About">
+    <div class="about-content">
+      <p>&copy; 2026 Michael A. Heroux</p>
+      <p>Code is MIT licensed. Everything else is CC BY 4.0.</p>
+      <p class="about-links">
+        <a href="https://opensource.org/license/mit" target="_blank" rel="noopener">MIT License</a>
+        <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>
+      </p>
+      <button id="about-close-btn" type="button">Close</button>
+    </div>
+  </dialog>
 
   <script src="script.js"></script>
 </body>

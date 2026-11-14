@@ -457,6 +457,32 @@ textarea { resize: vertical; }
 }
 .site-footer a { color: inherit; }
 
+/* About: a plain text link in the footer, and its small dialog. */
+.about-link {
+  background: none;
+  border-radius: 0;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  font-weight: inherit;
+  text-decoration: underline;
+}
+.about-dialog {
+  width: min(400px, calc(100% - 32px));
+  padding: 0;
+  border: 0;
+  border-radius: 20px;
+  background: var(--card);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+}
+.about-dialog::backdrop { background: rgba(36, 26, 23, .55); }
+.about-content { padding: 26px; text-align: center; line-height: 1.5; }
+.about-content p { margin: 0 0 12px; }
+.about-links { display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; }
+.about-links a { color: var(--accent); }
+.about-content button { margin-top: 6px; }
+
 @media (max-width: 560px) {
   .app { padding-top: 18px; }
   .card { padding: 18px; }

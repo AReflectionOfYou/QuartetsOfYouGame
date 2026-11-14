@@ -33,6 +33,9 @@ Rules, checked when the puzzle loads:
   their voices from their order in the file, Bass first.
 - `subtitle`, `winMessage`, `backgroundImage` and each group's `details` are
   optional.
+- A `backgroundImage` added to this repo must follow the image policy in the
+  main [README](../README.md#image-policy): no photos or likenesses of real
+  people, only images created with Claude.
 
 ## Listing a puzzle in the Repertoire
 
