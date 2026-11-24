@@ -380,7 +380,7 @@ button.secondary, .button-link.secondary { background: #6f625b; color: #fff; }
 .field > span { font-weight: 700; font-size: .92rem; }
 .field-row { display: flex; gap: 12px; flex-wrap: wrap; }
 .field-narrow { flex: 0 1 190px; }
-input[type="text"], select, textarea {
+input[type="text"], input[type="url"], select, textarea {
   font: inherit;
   padding: 10px 12px;
   border: 1px solid #cdbcab;
@@ -420,6 +420,99 @@ textarea { resize: vertical; }
 .compose-status.warn { background: #fdf0dc; border: 1px solid #ecc995; }
 .copy-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin: 4px 0 8px; }
 .copy-line { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; font-size: .88rem; overflow-wrap: anywhere; }
+
+/* ---------- Puzzle packs ---------- */
+
+.pack-bar { margin: 10px auto 0; color: var(--muted); font-size: .9rem; }
+.pack-bar a { color: var(--accent); }
+.pack-warning {
+  margin: 10px auto 0;
+  max-width: 620px;
+  padding: 8px 14px;
+  border-radius: var(--radius);
+  background: #fdf0dc;
+  border: 1px solid #ecc995;
+  font-size: .9rem;
+}
+.pack-error h2 { margin-bottom: 8px; }
+.pack-error p { line-height: 1.5; }
+.error-list { margin: 0 0 12px; padding-left: 22px; line-height: 1.5; color: var(--danger); }
+.error-list li + li { margin-top: 4px; }
+
+/* ---------- Make your own (Compose help) ---------- */
+
+.compose-help h3 { margin: 22px 0 6px; font-size: 1.2rem; }
+.compose-help p { line-height: 1.55; }
+.paths { list-style: none; padding: 0; margin: 16px 0 0; display: grid; gap: 12px; counter-reset: path; }
+.path {
+  counter-increment: path;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+  padding: 14px 18px 16px;
+}
+.path h3 { margin: 0 0 4px; }
+.path h3::before { content: counter(path) ". "; color: var(--voice-tenor); }
+.path p { margin: 0 0 12px; }
+.path a:not(.button-link) { color: var(--accent); }
+.controls.left { justify-content: flex-start; }
+code { font-size: .88em; overflow-wrap: anywhere; }
+.share-form { display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap; margin: 12px 0; }
+.share-form .field { flex: 1 1 280px; }
+.compose-status ul { margin: 0 0 8px; padding-left: 20px; }
+.compose-status .button-link { margin-top: 2px; }
+.card-footer {
+  margin-top: 26px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: .85rem;
+  line-height: 1.5;
+}
+.card-footer p { margin: 0 0 6px; }
+.card-footer a { color: inherit; }
+
+/* ---------- Compose form: packs ---------- */
+
+.pack-fields, .puzzle-fields {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px 16px 16px;
+  margin: 0;
+  display: grid;
+  gap: 12px;
+}
+.pack-fields legend, .puzzle-fields legend { font-family: var(--font-brand); font-weight: 700; padding: 0 6px; }
+.puzzle-bar { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.puzzle-tabs, .puzzle-bar-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+.tab {
+  padding: 7px 14px;
+  font-size: .88rem;
+  background: #fff;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tab[aria-current="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.tab.has-errors { border-color: var(--danger); box-shadow: inset 0 -3px 0 var(--danger); }
+.open-pack {
+  margin-top: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+  padding: 10px 16px;
+}
+.open-pack[open] { display: grid; gap: 12px; padding-bottom: 16px; }
+.open-pack summary { cursor: pointer; font-weight: 800; }
+.open-pack p { margin: 0; }
+.open-row { display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap; }
+.open-row .field { flex: 1 1 260px; }
+input[type="file"] { font: inherit; font-size: .9rem; }
+#c-open-status { margin-top: 12px; }
+.export-out { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .82rem; }
 
 /* ---------- Modals ---------- */
 

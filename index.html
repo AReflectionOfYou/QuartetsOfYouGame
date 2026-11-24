@@ -18,6 +18,23 @@
     <section class="hero">
       <h1 id="puzzle-title">Quartets of You</h1>
       <p id="puzzle-subtitle" class="subtitle">Sort sixteen words into four quartets.</p>
+      <p id="pack-bar" class="pack-bar hidden">
+        Puzzle pack: <strong id="pack-bar-title"></strong><span id="pack-bar-byline"></span>
+        <span aria-hidden="true">&middot;</span>
+        <a href="index.html">Play default puzzles</a>
+      </p>
+      <p id="pack-warning" class="pack-warning hidden" role="status"></p>
+    </section>
+
+    <!-- ============ A pack that didn't load ============ -->
+    <section id="pack-error" class="card pack-error hidden" role="alert">
+      <h2 id="pack-error-title">This pack didn't load</h2>
+      <p id="pack-error-message"></p>
+      <ul id="pack-error-details" class="error-list hidden"></ul>
+      <p id="pack-error-hint" class="muted small hidden"></p>
+      <div class="controls">
+        <a class="button-link" href="index.html">Play the default puzzles</a>
+      </div>
     </section>
 
     <!-- ============ Repertoire (puzzle picker) ============ -->
@@ -57,7 +74,7 @@
       </div>
 
       <div id="standard-controls" class="controls">
-        <a class="button-link secondary" href="index.html">Repertoire</a>
+        <a id="game-back" class="button-link secondary" href="index.html">Repertoire</a>
         <button id="game-help-btn" type="button" class="quiet-btn">Help</button>
         <button id="shuffle-btn" type="button" class="secondary">Rehearse</button>
         <button id="clear-btn" type="button" class="secondary">Clear</button>
@@ -86,50 +103,161 @@
       <ol id="end-groups" class="program-list"></ol>
       <div class="controls">
         <button id="play-again-btn" type="button">Perform again</button>
-        <a class="button-link secondary" href="index.html">Back to Repertoire</a>
+        <a id="end-back" class="button-link secondary" href="index.html">Back to Repertoire</a>
       </div>
     </section>
 
-    <!-- ============ Compose ============ -->
+    <!-- ============ Compose: make your own puzzles ============ -->
+    <section id="compose-help" class="card compose-help hidden">
+      <div class="card-header">
+        <h2>Make your own puzzles</h2>
+        <a class="button-link secondary" href="index.html">Repertoire</a>
+      </div>
+      <p class="muted">A puzzle is a title and four quartets of four words. A <strong>pack</strong> is one or more puzzles in a single JSON file that you can put online and share. There are three ways to make one.</p>
+
+      <ol class="paths">
+        <li class="path">
+          <h3>Use the form</h3>
+          <p>Fill in the quartets, try each puzzle out, then download the pack or copy its JSON. You can also open a pack you already have, from its web address or a file, to edit or extend it.</p>
+          <a class="button-link" href="index.html?compose=form">Open the form</a>
+        </li>
+        <li class="path">
+          <h3>Write a pack by hand</h3>
+          <p>A pack is a short, plain text file. The format guide explains every field and the rules, and the example pack is ready to copy.</p>
+          <div class="controls left">
+            <a id="guide-link" class="button-link quiet-btn" href="docs/PUZZLE_FORMAT.md" target="_blank" rel="noopener">Format guide</a>
+            <a class="button-link quiet-btn" href="docs/example-pack.json" target="_blank" rel="noopener">Example pack</a>
+            <a class="button-link quiet-btn" href="index.html?pack=docs/example-pack.json">Play the example</a>
+          </div>
+        </li>
+        <li class="path">
+          <h3>Brainstorm with an AI</h3>
+          <p>Give an AI assistant the <a id="guide-link-ai" href="docs/PUZZLE_FORMAT.md" target="_blank" rel="noopener">format guide</a> and ask for a pack, for example: <em>"Using this format, write a Quartets of You pack of three puzzles about our family's camping trips."</em> Then paste its answer into the form's <strong>Open a pack</strong> box to check it and try it out. Check the puzzles yourself: AI assistants make mistakes.</p>
+          <div class="controls left">
+            <button id="copy-guide-btn" type="button" class="quiet-btn">Copy the format guide</button>
+          </div>
+        </li>
+      </ol>
+
+      <h3>Share your pack</h3>
+      <p>Put the pack's JSON file online somewhere that allows <strong>cross-origin access</strong>, so this game can read it from another site. GitHub Pages works, and so does the <strong>Raw</strong> link of a GitHub gist. Then share this game's address followed by <code>?pack=</code> and your pack's address.</p>
+      <p class="muted small">For example: <code>https://&lt;this game&gt;/?pack=https://example.org/my-pack.json</code></p>
+
+      <form id="share-form" class="share-form" novalidate>
+        <label class="field">
+          <span>Your pack's address</span>
+          <input id="share-url" type="url" inputmode="url" autocomplete="off" spellcheck="false" placeholder="https://example.org/my-pack.json" />
+        </label>
+        <button id="share-test-btn" type="submit">Test and build link</button>
+      </form>
+      <div id="share-result" class="compose-status hidden" role="status" aria-live="polite"></div>
+
+      <div class="card-footer">
+        <p>&copy; 2026 Michael A. Heroux. Code is under the <a href="https://opensource.org/license/mit" target="_blank" rel="noopener">MIT License</a>; documents and visual content are under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>.</p>
+        <p>Puzzle packs belong to the people who write them. You own your puzzles and choose how others may use them; a pack's optional <code>license</code> field is a good place to say so.</p>
+      </div>
+    </section>
+
+    <!-- ============ Compose form ============ -->
     <section id="compose" class="card compose hidden">
       <div class="card-header">
         <h2>Compose</h2>
-        <a class="button-link secondary" href="index.html">Repertoire</a>
+        <div class="header-actions">
+          <a class="button-link quiet-btn" href="index.html?compose">Help and sharing</a>
+          <a class="button-link secondary" href="index.html">Repertoire</a>
+        </div>
       </div>
-      <p class="muted">Write a puzzle: a title and four groups of four words. Give each group a different voice, from Bass (easiest) to Soprano (hardest).</p>
+      <p class="muted">Write one puzzle or several. Each puzzle is a title and four quartets of four words; give each quartet a different voice, from Bass (easiest) to Soprano (hardest).</p>
+
+      <details class="open-pack">
+        <summary>Open a pack</summary>
+        <p class="muted small">Opening a pack replaces what's in the form. You can undo it right after.</p>
+        <div class="open-row">
+          <label class="field">
+            <span>From a web address</span>
+            <input id="c-open-url" type="url" inputmode="url" autocomplete="off" spellcheck="false" placeholder="https://example.org/my-pack.json" />
+          </label>
+          <button id="c-open-url-btn" type="button" class="secondary">Open</button>
+        </div>
+        <label class="field">
+          <span>From a file on this device</span>
+          <input id="c-open-file" type="file" accept=".json,application/json,text/plain" />
+        </label>
+        <label class="field">
+          <span>Or paste a pack's JSON, for example from an AI assistant</span>
+          <textarea id="c-paste" rows="5" spellcheck="false" placeholder='{ "formatVersion": 1, "title": "...", "puzzles": [ ... ] }'></textarea>
+        </label>
+        <div class="controls left">
+          <button id="c-paste-btn" type="button" class="secondary">Check and open</button>
+        </div>
+      </details>
+      <div id="c-open-status" class="compose-status hidden" role="status" aria-live="polite"></div>
 
       <form id="compose-form" novalidate>
-        <div class="field-row">
+        <fieldset class="pack-fields">
+          <legend>Pack</legend>
+          <div class="field-row">
+            <label class="field">
+              <span>Pack title <small class="muted">(optional)</small></span>
+              <input id="c-pack-title" type="text" maxlength="80" placeholder="The Smith Family Reunion" />
+            </label>
+            <label class="field">
+              <span>Author <small class="muted">(optional)</small></span>
+              <input id="c-author" type="text" maxlength="80" />
+            </label>
+          </div>
+          <label class="field">
+            <span>Description <small class="muted">(optional)</small></span>
+            <input id="c-description" type="text" maxlength="200" />
+          </label>
+          <div class="field-row">
+            <label class="field">
+              <span>License <small class="muted">(optional, for example CC BY 4.0)</small></span>
+              <input id="c-license" type="text" maxlength="80" />
+            </label>
+            <label class="field">
+              <span>File name</span>
+              <input id="c-file" type="text" maxlength="60" placeholder="my-pack" />
+              <small class="muted">Downloads as <code id="c-file-preview">my-pack.json</code>.</small>
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="puzzle-bar">
+          <div id="c-tabs" class="puzzle-tabs" role="group" aria-label="Puzzles in this pack"></div>
+          <div class="puzzle-bar-actions">
+            <button id="c-add-btn" type="button" class="quiet-btn small-btn">Add a puzzle</button>
+            <button id="c-remove-btn" type="button" class="quiet-btn small-btn">Remove this puzzle</button>
+          </div>
+        </div>
+
+        <fieldset class="puzzle-fields">
+          <legend id="c-puzzle-legend">Puzzle</legend>
           <label class="field">
             <span>Title</span>
             <input id="c-title" type="text" required maxlength="80" placeholder="Our Family Reunion" />
           </label>
           <label class="field">
-            <span>File name</span>
-            <input id="c-id" type="text" maxlength="60" placeholder="our-family-reunion" pattern="[a-z0-9-]+" />
-            <small class="muted">Lowercase letters, numbers and dashes. Saved as <code id="c-id-preview">puzzle.json</code>.</small>
+            <span>Subtitle <small class="muted">(optional)</small></span>
+            <input id="c-subtitle" type="text" maxlength="140" />
           </label>
-        </div>
-        <label class="field">
-          <span>Subtitle <small class="muted">(optional)</small></span>
-          <input id="c-subtitle" type="text" maxlength="140" />
-        </label>
-        <label class="field">
-          <span>Message for a full solve <small class="muted">(optional)</small></span>
-          <input id="c-win" type="text" maxlength="140" />
-        </label>
-
-        <div id="c-groups" class="compose-groups"></div>
+          <label class="field">
+            <span>Message for a full solve <small class="muted">(optional)</small></span>
+            <input id="c-win" type="text" maxlength="140" />
+          </label>
+          <div id="c-groups" class="compose-groups"></div>
+        </fieldset>
 
         <div id="compose-errors" class="compose-errors hidden" role="alert"></div>
         <div id="compose-status" class="compose-status hidden" role="status"></div>
+        <textarea id="c-export-out" class="export-out hidden" rows="8" readonly aria-label="Pack JSON"></textarea>
 
         <div class="controls">
           <button id="c-try-btn" type="button" class="secondary">Try it out</button>
-          <button id="c-folder-btn" type="button" class="secondary hidden">Choose puzzles folder</button>
-          <button id="c-save-btn" type="submit">Save puzzle</button>
+          <button id="c-copy-btn" type="button" class="secondary">Copy JSON</button>
+          <button id="c-save-btn" type="submit">Download pack</button>
         </div>
-        <p id="c-save-note" class="muted small center"></p>
+        <p class="muted small center">Try it out plays the puzzle on screen. Download and Copy check every puzzle in the pack first. Your draft is kept in this browser while you work.</p>
       </form>
     </section>
 
@@ -182,6 +310,7 @@
     <div class="about-content">
       <p>&copy; 2026 Michael A. Heroux</p>
       <p>Code is MIT licensed. Everything else is CC BY 4.0.</p>
+      <p class="muted small">Puzzle packs loaded from other sites belong to their authors, who choose their license.</p>
       <p class="about-links">
         <a href="https://opensource.org/license/mit" target="_blank" rel="noopener">MIT License</a>
         <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>

@@ -3,8 +3,12 @@
 One JSON file per puzzle. The file name (without `.json`) is the puzzle's id,
 and the game plays it at `index.html?puzzle=<id>`.
 
-The easiest way to write a puzzle is **Compose** in the game itself
-(`index.html?compose`). You can also copy one of these files and edit it.
+The full format, including multi-puzzle packs, is described in
+[docs/PUZZLE_FORMAT.md](../docs/PUZZLE_FORMAT.md), with a formal
+[JSON Schema](../schema/quartets-pack.schema.json). The easiest way to write a
+puzzle is **Compose** in the game itself (`index.html?compose`), or copy one of
+these files and edit it. Compose exports a pack (a `puzzles` list); a pack
+file with one puzzle also works in this folder.
 
 ## Format
 
@@ -27,12 +31,13 @@ The easiest way to write a puzzle is **Compose** in the game itself
 Rules, checked when the puzzle loads:
 
 - Exactly four groups, each with a `name` and exactly four `words`.
-- All sixteen words must be different (ignoring upper and lower case).
+- All sixteen words must be different, and so must the four group names
+  (both ignoring upper and lower case).
 - `voice` is `bass` (easiest), `tenor`, `alto` or `soprano` (hardest). Use
   each voice once. If you leave `voice` out of every group, the groups take
   their voices from their order in the file, Bass first.
-- `subtitle`, `winMessage`, `backgroundImage` and each group's `details` are
-  optional.
+- `subtitle`, `winMessage`, `maxMistakes` (1 to 10, default 4),
+  `backgroundImage` and each group's `details` are optional.
 - A `backgroundImage` added to this repo must follow the image policy in the
   main [README](../README.md#image-policy): no photos or likenesses of real
   people, only images created with Claude.
