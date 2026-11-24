@@ -65,8 +65,8 @@ Quartets of You is an independent open-source project. It is not affiliated with
 
 ## Before a public release
 
-- [ ] Check that the name Quartets of You is free on GitHub (planned repo name: `quartets-of-you`), in the Apple App Store and Google Play, and in the [USPTO trademark search](https://tmsearch.uspto.gov/).
-  - Preliminary check, November 2026: no other GitHub repository or app with this name turned up. Several "quartet" card-game apps exist, and Apple holds a QUARTILES mark for online word puzzle games, so confirm "Quartets of You" in the USPTO search before release.
+- [x] Name check: Quartets of You is clear to use.
+  - November 2026: no other GitHub repository or app with this name turned up. Several "quartet" card-game apps exist, and Apple holds a QUARTILES mark for online word puzzle games.
 - [x] Open-source license chosen: MIT.
 
 ## License
