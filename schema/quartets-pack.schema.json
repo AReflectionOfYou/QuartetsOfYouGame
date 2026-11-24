@@ -1,6 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/AReflectionOfYou/QuartetsOfYouGame/schema/quartets-pack.schema.json",
+  "$comment": "Format version 1. The original lives at https://github.com/AReflectionOfYou/QuartetsOfYouGame/blob/main/schema/quartets-pack.schema.json; if this is a copy, check there for updates. MIT licensed, (c) 2026 Michael A. Heroux.",
   "title": "Quartets of You puzzle pack",
   "description": "A Quartets of You file: either a pack (a \"puzzles\" list) or a single puzzle (a \"groups\" list at the top level). Unknown extra fields are allowed and ignored. The game also checks two rules this schema can't express: all sixteen words in a puzzle are different, and so are its four quartet names (both ignoring case and surrounding spaces). See docs/PUZZLE_FORMAT.md.",
   "type": "object",

@@ -32,10 +32,12 @@ Anyone can write a **puzzle pack**, a single JSON file with one or more puzzles,
 https://<the game's address>/?pack=https://example.org/my-pack.json
 ```
 
-The pack's host must allow cross-origin access so the game can read it; GitHub Pages and a gist's Raw link both work. The game only reads packs, checks them against the format, and explains any problem it finds. Try the example: `index.html?pack=docs/example-pack.json`.
+The pack's host must allow cross-origin access so the game can read it; GitHub Pages and a gist's Raw link both work. The easiest start is the [puzzle pack template](https://github.com/AReflectionOfYou/quartets-puzzle-pack-template). The game only reads packs, checks them against the format, and explains any problem it finds. Try the example: `index.html?pack=docs/example-pack.json`.
 
 - **[Puzzle format guide](docs/PUZZLE_FORMAT.md)**: every field, the rules, and a complete example to copy.
 - [JSON Schema](schema/quartets-pack.schema.json) for the format, and the [example pack](docs/example-pack.json).
+
+- **[Puzzle pack template](https://github.com/AReflectionOfYou/quartets-puzzle-pack-template)**: a GitHub template repository for hosting your own packs, with sample packs, GitHub Pages hosting steps, and a check that validates every pack on each commit.
 
 Pack authors own their puzzles and choose how others may use them.
 
