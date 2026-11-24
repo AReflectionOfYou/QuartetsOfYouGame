@@ -24,18 +24,34 @@ python3 -m http.server 8000
 
 Then open <http://localhost:8000>. The puzzle picker is the **Repertoire**. Any static host works, including GitHub Pages.
 
+## Play a puzzle pack from anywhere
+
+Anyone can write a **puzzle pack**, a single JSON file with one or more puzzles, host it on their own site, and share a link. Nothing in this repo has to change:
+
+```
+https://<the game's address>/?pack=https://example.org/my-pack.json
+```
+
+The pack's host must allow cross-origin access so the game can read it; GitHub Pages and a gist's Raw link both work. The game only reads packs, checks them against the format, and explains any problem it finds. Try the example: `index.html?pack=docs/example-pack.json`.
+
+- **[Puzzle format guide](docs/PUZZLE_FORMAT.md)**: every field, the rules, and a complete example to copy.
+- [JSON Schema](schema/quartets-pack.schema.json) for the format, and the [example pack](docs/example-pack.json).
+
+Pack authors own their puzzles and choose how others may use them.
+
 ## Write your own puzzles
 
-Open **Compose** from the Repertoire, or go to `index.html?compose`.
+Open **Compose** from the Repertoire, or go to `index.html?compose`. It offers three ways in:
 
-1. Enter a title and four quartets. Each quartet has a category name, four words and a voice. You can add an optional backstory that pops up when the quartet is solved.
-2. Press **Try it out** to play it straight away.
-3. Press **Save puzzle**. Compose first checks that every quartet is complete, that each voice is used once, and that all sixteen words are different.
-   - **Chrome and Edge:** the first time you save, choose the game's `puzzles` folder. The game remembers it and saves straight into it after that.
-   - **Other browsers:** the puzzle downloads as a JSON file. Move it into the `puzzles` folder.
-4. To list the puzzle in the Repertoire, add the line Compose shows you to the `PUZZLES` list at the top of [script.js](script.js). A puzzle that isn't listed still plays at `index.html?puzzle=<file-name>`.
+1. **Use the form** (`index.html?compose=form`). Enter one or more puzzles: a title and four quartets, each with a category, four words, a voice and an optional backstory. **Try it out** plays the puzzle on screen. **Download pack** and **Copy JSON** check every puzzle (each quartet complete, each voice used once, all sixteen words different) and export the pack. **Open a pack** loads an existing pack from a web address, a file or pasted text, so you can edit or extend it.
+2. **Write a pack by hand**, following the [format guide](docs/PUZZLE_FORMAT.md).
+3. **Brainstorm with an AI**: give an assistant the format guide, ask for a pack, and paste its answer into the form to check and preview it.
 
-Your draft is kept in the browser while you work, so you can go back and forth between Compose and Try it out. The puzzle file format is described in [puzzles/README.md](puzzles/README.md).
+The Compose page also has a helper that test-loads your hosted pack and builds the `?pack=` link to share.
+
+Your draft is kept in the browser while you work, so you can go back and forth between Compose and Try it out.
+
+To add a puzzle to this repo's built-in Repertoire, put its file in [puzzles/](puzzles) and add a line to the `PUZZLES` list at the top of [script.js](script.js); see [puzzles/README.md](puzzles/README.md).
 
 ## Accessibility
 

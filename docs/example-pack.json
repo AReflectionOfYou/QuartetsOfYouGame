@@ -1,0 +1,67 @@
+{
+  "formatVersion": 1,
+  "title": "Sunday Afternoons",
+  "author": "The Quartets of You project",
+  "description": "Two small puzzles to show how a pack works. Copy this file and make it your own.",
+  "license": "CC BY 4.0",
+  "puzzles": [
+    {
+      "title": "Weekend Picnic",
+      "subtitle": "Spread the blanket and sort the basket.",
+      "winMessage": "Not an ant in sight. Well played!",
+      "groups": [
+        {
+          "name": "Picnic food",
+          "voice": "bass",
+          "words": ["Sandwich", "Lemonade", "Watermelon", "Potato salad"]
+        },
+        {
+          "name": "Kinds of blanket",
+          "voice": "tenor",
+          "words": ["Wool", "Fleece", "Security", "Electric"],
+          "details": "A security blanket is the one a small child won't let go of."
+        },
+        {
+          "name": "___ball",
+          "voice": "alto",
+          "words": ["Basket", "Foot", "Meat", "Snow"],
+          "details": "Basketball, football, meatball and snowball. Basket was the decoy for the picnic."
+        },
+        {
+          "name": "Starts with a bird",
+          "voice": "soprano",
+          "words": ["Crowbar", "Henna", "Owlish", "Wrenching"],
+          "details": "CROWbar, HENna, OWLish and WRENching."
+        }
+      ]
+    },
+    {
+      "title": "Rainy Day",
+      "subtitle": "Stuck indoors? Sort these while you wait for the sun.",
+      "groups": [
+        {
+          "name": "Card games",
+          "voice": "bass",
+          "words": ["Snap", "Rummy", "Solitaire", "Poker"]
+        },
+        {
+          "name": "Things you pour from",
+          "voice": "tenor",
+          "words": ["Teapot", "Pitcher", "Jug", "Kettle"]
+        },
+        {
+          "name": "___drop",
+          "voice": "alto",
+          "words": ["Rain", "Dew", "Back", "Tear"],
+          "details": "Raindrop, dewdrop, backdrop and teardrop."
+        },
+        {
+          "name": "Umbrella ___",
+          "voice": "soprano",
+          "words": ["Stand", "Term", "Policy", "Organization"],
+          "details": "An umbrella stand, an umbrella term, an umbrella policy and an umbrella organization."
+        }
+      ]
+    }
+  ]
+}
