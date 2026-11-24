@@ -2,6 +2,8 @@
 
 This guide explains how to write a **puzzle pack** for Quartets of You by hand, or how to ask an AI assistant to write one for you. A pack is one plain text file in JSON format that holds one or more puzzles. Put it online and anyone can play it with a link; you don't need to change the game.
 
+This guide describes **format version 1**. The original lives in the [game's repository](https://github.com/AReflectionOfYou/QuartetsOfYouGame/blob/main/docs/PUZZLE_FORMAT.md); if you're reading a copy, check there for updates.
+
 The formal definition is the JSON Schema in [schema/quartets-pack.schema.json](../schema/quartets-pack.schema.json). This guide says the same thing in plain language.
 
 ## What a puzzle is
@@ -19,7 +21,7 @@ Players tap four words they think belong together. A wrong guess is a "bum note"
 
 ## A complete example
 
-Copy this and change the words. It's also in [example-pack.json](example-pack.json), and you can play it in the game at `index.html?pack=docs/example-pack.json`.
+Copy this and change the words. It's also in [example-pack.json](https://github.com/AReflectionOfYou/QuartetsOfYouGame/blob/main/docs/example-pack.json), and you can [play it in the game](https://areflectionofyou.github.io/QuartetsOfYouGame/?pack=docs/example-pack.json).
 
 ```json
 {
@@ -142,7 +144,7 @@ The game ignores fields it doesn't know, so you can add your own notes (for exam
 
 ### A single puzzle on its own
 
-A file can also hold just one puzzle, with `groups` at the top level instead of a `puzzles` list. This is how the built-in puzzles in the game's [puzzles](../puzzles) folder are written, and it still works anywhere a pack does:
+A file can also hold just one puzzle, with `groups` at the top level instead of a `puzzles` list. This is how the built-in puzzles in the game's [puzzles](https://github.com/AReflectionOfYou/QuartetsOfYouGame/tree/main/puzzles) folder are written, and it still works anywhere a pack does:
 
 ```json
 {
@@ -169,9 +171,11 @@ A file can't have both `puzzles` and `groups` at the top.
    - **A GitHub gist**: create a gist, then press **Raw** and use that address (it starts with `https://gist.githubusercontent.com/`). Not the gist's normal web page.
    Many file-sharing sites (Dropbox, Google Drive) don't allow cross-origin access, so the game can't read packs from them.
 3. Share the game's address followed by `?pack=` and your pack's address:
-   `https://<the game's address>/?pack=https://yourname.github.io/my-puzzles/reunion.json`
+   `https://areflectionofyou.github.io/QuartetsOfYouGame/?pack=https://yourname.github.io/my-puzzles/reunion.json`
 
-The game's **Compose** page has a helper that tests your pack's address and builds this link for you, so you know it works before you send it.
+The game's [Compose page](https://areflectionofyou.github.io/QuartetsOfYouGame/?compose) has a helper that tests your pack's address and builds this link for you, so you know it works before you send it.
+
+**The easy way to host packs:** the [puzzle pack template](https://github.com/AReflectionOfYou/quartets-puzzle-pack-template) is a ready-made GitHub repository for your packs. Press **Use this template**, turn on GitHub Pages, and edit the sample packs. A check runs on every commit and tells you, in plain words, about anything the game would reject.
 
 ## Asking an AI assistant to write a pack
 
@@ -179,7 +183,7 @@ Give the assistant this whole guide and ask for what you want, for example:
 
 > Using the Quartets of You format below, write a pack of three puzzles about our family's camping trips. Use these people and places: ... Reply with only the JSON.
 
-Then open the game's **Compose** form, choose **Open a pack**, and paste the answer in. Compose checks it against the rules above, points out anything to fix, and lets you try each puzzle before you share it. Check the puzzles yourself, too: AI assistants make mistakes, especially with hidden words and fill-in-the-blank categories.
+Then open the game's [Compose form](https://areflectionofyou.github.io/QuartetsOfYouGame/?compose=form), choose **Open a pack**, and paste the answer in. Compose checks it against the rules above, points out anything to fix, and lets you try each puzzle before you share it. Check the puzzles yourself, too: AI assistants make mistakes, especially with hidden words and fill-in-the-blank categories.
 
 ## Who owns a pack
 
