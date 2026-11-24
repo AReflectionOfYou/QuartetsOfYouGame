@@ -1,0 +1,52 @@
+name: Check the pack template's copies
+
+# The puzzle pack template repo keeps copies of three files from this repo, so
+# its commit check applies the same rules as the game. This check fails when a
+# copy no longer matches its original here, as a reminder to update the template.
+
+on:
+  schedule:
+    - cron: "0 14 * * 1"   # Mondays, 14:00 UTC
+  push:
+    branches: [main]
+    paths:
+      - pack-rules.js
+      - schema/quartets-pack.schema.json
+      - docs/PUZZLE_FORMAT.md
+      - .github/workflows/template-sync.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    name: Compare with the template
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compare each copy with its original
+        env:
+          TEMPLATE: https://raw.githubusercontent.com/AReflectionOfYou/quartets-puzzle-pack-template/main
+        run: |
+          status=0
+          # original in this repo -> copy in the template repo
+          while read -r original copy; do
+            if ! curl -fsSL --retry 3 "$TEMPLATE/$copy" -o template-copy; then
+              echo "::error file=$original::Couldn't download $copy from the template repo."
+              status=1
+              continue
+            fi
+            if cmp -s "$original" template-copy; then
+              echo "✓ $original matches the template's $copy"
+            else
+              echo "::error file=$original::The template's $copy is out of date. Copy $original from this repo over it in AReflectionOfYou/quartets-puzzle-pack-template."
+              diff -u template-copy "$original" | head -40 || true
+              status=1
+            fi
+          done <<'FILES'
+          pack-rules.js scripts/pack-rules.js
+          schema/quartets-pack.schema.json schema/quartets-pack.schema.json
+          docs/PUZZLE_FORMAT.md docs/PUZZLE_FORMAT.md
+          FILES
+          exit $status
