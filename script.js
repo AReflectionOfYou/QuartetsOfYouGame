@@ -881,8 +881,16 @@ const VOICE_NOTES = {
   soprano: "\u266C"    // ♬ two beamed sixteenth notes
 };
 
+// Messaging apps draw these notes from fallback fonts, so their widths can
+// differ a little between devices; plain text can't guarantee equal widths.
+// Tested in Messages on iPhone: plain spaces line up best.
 function boxScoreRow(voices) {
   return voices.map(v => VOICE_NOTES[v]).join(" ");
+}
+
+// One line that says which note is which voice, for the shared text.
+function boxScoreLegend() {
+  return VOICES.map(v => `${VOICE_NOTES[v]} ${VOICE_LABELS[v]}`).join("  ");
 }
 
 // The address that brings a friend to this same puzzle, or "" for a puzzle
@@ -898,7 +906,7 @@ function boxScoreText(won, found) {
   const result = tuttiBravo ? "Bravo! All four quartets in one take"
     : won ? `Standing ovation, ${bumNotes}`
     : `The curtain fell, ${found} of 4 quartets`;
-  const lines = [`Quartets of You: ${puzzle.title || "a puzzle"}`, result];
+  const lines = [`Quartets of You: ${puzzle.title || "a puzzle"}`, result, boxScoreLegend()];
   const tutti = guesses.filter(g => g.tutti);
   const standard = guesses.filter(g => !g.tutti);
   if (tutti.length) {
@@ -920,7 +928,8 @@ function showBoxScore(won, found) {
   boxScore = boxScoreText(won, found);
   // Show the rows (not the title and link, which the page already shows).
   el.boxScoreRows.textContent = boxScore.split("\n")
-    .filter(line => line === "" || line === "Tutti" || [...line].some(ch => Object.values(VOICE_NOTES).includes(ch)))
+    .filter(line => line !== boxScoreLegend() &&
+      (line === "" || line === "Tutti" || [...line].some(ch => Object.values(VOICE_NOTES).includes(ch))))
     .join("\n").trim();
   el.boxScoreCopy.textContent = "Copy results";
   el.boxScoreShare.classList.toggle("hidden", typeof navigator.share !== "function");
