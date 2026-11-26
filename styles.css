@@ -581,6 +581,7 @@ input[type="file"] { font: inherit; font-size: .9rem; }
   font-size: .85rem;
 }
 .site-footer a { color: inherit; }
+.site-footer .version { white-space: nowrap; }
 
 /* About: a plain text link in the footer, and its small dialog. */
 .about-link {

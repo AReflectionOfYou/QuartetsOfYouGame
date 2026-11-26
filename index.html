@@ -7,7 +7,10 @@
   <meta name="theme-color" content="#5a1a22" />
   <title>Quartets of You</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect x=%2210%22 y=%2210%22 width=%2280%22 height=%2216%22 rx=%224%22 fill=%22%23F9D3B4%22/><rect x=%2210%22 y=%2232%22 width=%2280%22 height=%2216%22 rx=%224%22 fill=%22%23E3892B%22/><rect x=%2210%22 y=%2254%22 width=%2280%22 height=%2216%22 rx=%224%22 fill=%22%23A3401D%22/><rect x=%2210%22 y=%2276%22 width=%2280%22 height=%2216%22 rx=%224%22 fill=%22%235A1A22%22/></svg>" />
-  <link rel="stylesheet" href="styles.css" />
+  <!-- Version: when you change the game, bump the number here, in the ?v= links
+       below and in the footer, so browsers fetch the new files. -->
+  <meta name="version" content="1.4.0" />
+  <link rel="stylesheet" href="styles.css?v=1.4.0" />
   <!-- GoatCounter (cookie-free analytics) -->
   <script data-goatcounter="https://maherou-areflectionofyou.goatcounter.com/count"
           async src="//gc.zgo.at/count.js"></script>
@@ -320,6 +323,8 @@
     Not affiliated with The New York Times.
     <span aria-hidden="true">&middot;</span>
     <button id="about-btn" type="button" class="about-link" aria-haspopup="dialog">About</button>
+    <span aria-hidden="true">&middot;</span>
+    <span class="version">Version 1.4.0</span>
   </footer>
 
   <dialog id="about-dialog" class="about-dialog" aria-label="About">
@@ -335,7 +340,7 @@
     </div>
   </dialog>
 
-  <script src="pack-rules.js"></script>
-  <script src="script.js"></script>
+  <script src="pack-rules.js?v=1.4.0"></script>
+  <script src="script.js?v=1.4.0"></script>
 </body>
 </html>

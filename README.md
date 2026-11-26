@@ -56,6 +56,10 @@ Your draft is kept in the browser while you work, so you can go back and forth b
 
 To add a puzzle to this repo's built-in Repertoire, put its file in [puzzles/](puzzles) and add a line to the `PUZZLES` list at the top of [script.js](script.js); see [puzzles/README.md](puzzles/README.md).
 
+## Versions
+
+The game's version appears at the bottom of every screen, so you can tell which release a browser is running. When you change the game, bump the number in [index.html](index.html): in the `version` meta tag, in the `?v=` on the stylesheet and script links, and in the footer. The `?v=` change makes browsers fetch the new files instead of a saved copy. A check on every push makes sure all the copies match.
+
 ## Accessibility
 
 The four voice colors are warm shades from deep oxblood (Bass) to pale apricot (Soprano). Each is about twice as bright as the one before, so they stay distinct for colorblind players, and color is never the only cue: every solved row and program entry carries its voice name and initial. The Bravo celebration is visual only, with no sound, and its animation is turned off for players who ask their system for reduced motion.

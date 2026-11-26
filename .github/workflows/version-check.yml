@@ -1,0 +1,39 @@
+name: Check the version number
+
+# The game's version appears in several places in index.html. This fails if
+# they don't all match, so the footer always shows the release you're playing
+# and browsers always fetch that release's files.
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  version:
+    name: Versions match
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compare every copy of the version in index.html
+        run: |
+          version=$(sed -n 's/.*<meta name="version" content="\([^"]*\)".*/\1/p' index.html)
+          if [ -z "$version" ]; then
+            echo "::error file=index.html::No <meta name=\"version\"> tag found."
+            exit 1
+          fi
+          echo "Version: $version"
+          status=0
+          for asset in styles.css pack-rules.js script.js; do
+            if ! grep -q "$asset?v=$version\"" index.html; then
+              echo "::error file=index.html::The link to $asset should end in ?v=$version, to match the version tag."
+              status=1
+            fi
+          done
+          if ! grep -q ">Version $version<" index.html; then
+            echo "::error file=index.html::The footer should say Version $version, to match the version tag."
+            status=1
+          fi
+          exit $status
