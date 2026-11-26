@@ -12,6 +12,7 @@ Part of the [A Reflection of You](https://github.com/AReflectionOfYou) collectio
 - **Rehearse** shuffles the board.
 - **Tutti** is an optional challenge before you start: sort all sixteen words into four rows and submit once. A row counts only if all four of its words belong to the same quartet. Get every row right for a **Bravo!** and a conductor's baton mark on your results. Otherwise, the rows you got right carry over and you play the rest as normal.
 - The results read like a concert program, listing each voice in the order you found it.
+- At the end, **Copy results** (or **Share** on phones) gives you a box score to paste anywhere: one row per guess, each word shown as its voice's note: ♩ Bass, ♪ Tenor, ♫ Alto, ♬ Soprano. A row of four matching notes is a quartet found. It never gives away the words, and it ends with a link to the same puzzle.
 
 ## Run it locally
 
