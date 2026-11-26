@@ -327,6 +327,34 @@ button.secondary, .button-link.secondary { background: #6f625b; color: #fff; }
 }
 .program-item .details-hint { margin-left: 2.85rem; }
 
+/* ---------- Box score ---------- */
+
+.box-score {
+  max-width: 420px;
+  margin: 8px auto 20px;
+  padding: 16px 18px 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+}
+.box-score h3 { margin: 0 0 8px; font-size: 1.15rem; }
+/* Prefer symbol fonts for the notes, so they look alike across devices. */
+.box-score-rows, .note-glyph {
+  font-family: "Apple Symbols", "Segoe UI Symbol", "Noto Sans Symbols 2", "Noto Sans Symbols", "DejaVu Sans", sans-serif;
+}
+.box-score-rows {
+  margin: 0 0 8px;
+  font-size: 1.7rem;
+  line-height: 1.25;
+  letter-spacing: .08em;
+  white-space: pre;
+  overflow-x: auto;
+}
+.box-score-key { margin: 0 0 12px; color: var(--muted); font-size: .85rem; line-height: 1.6; }
+.note-glyph { font-size: 1.25rem; vertical-align: -0.15em; }
+.nowrap { white-space: nowrap; margin-left: 6px; }
+.box-score textarea { margin-top: 10px; width: 100%; }
+
 /* ---------- Bravo ---------- */
 
 .bravo {

@@ -38,6 +38,7 @@ let mistakesRemaining = MAX_MISTAKES;
 let mode = "start";                 // "start" | "tutti" | "standard" | "over"
 let tuttiPick = null;               // index into words of the first tapped tile in Tutti
 let tuttiBravo = false;
+let guesses = [];                   // every submitted row, for the box score: { tutti, voices: [4 voices] }
 let backTo = { label: "Repertoire", href: "index.html" };  // where the game's back buttons go
 
 const qs = new URLSearchParams(window.location.search);
@@ -89,6 +90,10 @@ const el = {
   detailsText: $("details-text"),
   detailsClose: $("details-close-btn"),
   pageBg: $("page-bg"),
+  boxScoreRows: $("box-score-rows"),
+  boxScoreCopy: $("box-score-copy"),
+  boxScoreShare: $("box-score-share"),
+  boxScoreFallback: $("box-score-fallback"),
   helpBtn: $("help-btn"),
   gameHelpBtn: $("game-help-btn"),
   helpModal: $("help-modal"),
@@ -472,6 +477,7 @@ function resetGame() {
   tuttiSolvedNames.clear();
   tuttiPick = null;
   tuttiBravo = false;
+  guesses = [];
   mode = "start";
   mistakesRemaining = puzzle.maxMistakes || MAX_MISTAKES;
   words = shuffleArray(puzzle.groups.flatMap(group => group.words));
@@ -664,6 +670,7 @@ function clearSelection() {
 function submitSelection() {
   if (selected.size !== 4 || mode === "over") return;
   beginStandard();
+  guesses.push({ tutti: false, voices: [...selected].map(voiceOfWord) });
   const choice = groupKey([...selected]);
   const match = puzzle.groups.find(group =>
     groupKey(group.words) === choice && !solvedGroupNames.has(group.name));
@@ -697,6 +704,13 @@ function afterSolve(group) {
   } else if (justWon) {
     setTimeout(() => endGame(true), REVEAL_DELAY_MS);
   }
+}
+
+// The voice of the quartet a word belongs to.
+function voiceOfWord(word) {
+  const k = normalize(word);
+  const group = puzzle.groups.find(g => g.words.some(w => normalize(w) === k));
+  return group ? voiceOf(group) : "bass";
 }
 
 function isOneAway(selectedWords) {
@@ -743,6 +757,7 @@ function submitTutti() {
   if (mode !== "tutti") return;
   const correct = [];
   for (let r = 0; r < 4; r++) {
+    guesses.push({ tutti: true, voices: words.slice(r * 4, r * 4 + 4).map(voiceOfWord) });
     const key = groupKey(words.slice(r * 4, r * 4 + 4));
     const group = puzzle.groups.find(g => groupKey(g.words) === key);
     if (group) correct.push(group);
@@ -809,6 +824,7 @@ function endGame(won) {
     ? (puzzle.winMessage || "Every quartet found. Thanks for performing!")
     : "Four bum notes ended the performance. Here is the full program.";
   el.batonMark.classList.toggle("hidden", !tuttiBravo);
+  showBoxScore(won, performed.size);
 
   el.endGroups.innerHTML = "";
   [...solvedGroupNames].forEach(name => {
@@ -846,6 +862,88 @@ function endGame(won) {
   });
 }
 
+
+// ---------------------------------------------------------------- box score
+//
+// A shareable record of the performance, one row per guess, in the order the
+// words were picked. Each word becomes the note of its quartet's voice: the
+// harder the voice, the busier the note. Tutti rows come first, under a label.
+//
+// These four come from Unicode's everyday symbols block, which every phone and
+// computer can show. The true half and sixteenth notes live in Unicode's music
+// block, which Apple devices have no font for, so a shared result would show
+// empty boxes there.
+
+const VOICE_NOTES = {
+  bass: "\u2669",      // ♩ quarter note
+  tenor: "\u266A",     // ♪ eighth note
+  alto: "\u266B",      // ♫ two beamed eighth notes
+  soprano: "\u266C"    // ♬ two beamed sixteenth notes
+};
+
+function boxScoreRow(voices) {
+  return voices.map(v => VOICE_NOTES[v]).join(" ");
+}
+
+// The address that brings a friend to this same puzzle, or "" for a puzzle
+// that only exists in this browser (Compose's Try it out).
+function puzzleShareUrl() {
+  if (qs.has("compose") || !/^https?:$/.test(window.location.protocol)) return "";
+  return `${window.location.origin}${window.location.pathname}${window.location.search}`;
+}
+
+function boxScoreText(won, found) {
+  const mistakes = (puzzle.maxMistakes || MAX_MISTAKES) - mistakesRemaining;
+  const bumNotes = mistakes === 0 ? "no bum notes" : `${mistakes} bum ${mistakes === 1 ? "note" : "notes"}`;
+  const result = tuttiBravo ? "Bravo! All four quartets in one take"
+    : won ? `Standing ovation, ${bumNotes}`
+    : `The curtain fell, ${found} of 4 quartets`;
+  const lines = [`Quartets of You: ${puzzle.title || "a puzzle"}`, result];
+  const tutti = guesses.filter(g => g.tutti);
+  const standard = guesses.filter(g => !g.tutti);
+  if (tutti.length) {
+    lines.push("", "Tutti");
+    tutti.forEach(g => lines.push(boxScoreRow(g.voices)));
+  }
+  if (standard.length) {
+    lines.push("");
+    standard.forEach(g => lines.push(boxScoreRow(g.voices)));
+  }
+  const url = puzzleShareUrl();
+  if (url) lines.push("", url);
+  return lines.join("\n");
+}
+
+let boxScore = "";
+
+function showBoxScore(won, found) {
+  boxScore = boxScoreText(won, found);
+  // Show the rows (not the title and link, which the page already shows).
+  el.boxScoreRows.textContent = boxScore.split("\n")
+    .filter(line => line === "" || line === "Tutti" || [...line].some(ch => Object.values(VOICE_NOTES).includes(ch)))
+    .join("\n").trim();
+  el.boxScoreCopy.textContent = "Copy results";
+  el.boxScoreShare.classList.toggle("hidden", typeof navigator.share !== "function");
+  el.boxScoreFallback.classList.add("hidden");
+}
+
+async function copyBoxScore() {
+  const copied = await copyText(boxScore, el.boxScoreCopy, "Copy results");
+  if (!copied) {
+    // No clipboard access: show the text, selected, to copy by hand.
+    el.boxScoreFallback.value = boxScore;
+    el.boxScoreFallback.classList.remove("hidden");
+    el.boxScoreFallback.select();
+  }
+}
+
+async function shareBoxScore() {
+  try {
+    await navigator.share({ text: boxScore });
+  } catch (error) {
+    if (error.name !== "AbortError") copyBoxScore();
+  }
+}
 
 // ---------------------------------------------------------------- Make your own (Compose help page)
 
@@ -1574,6 +1672,8 @@ el.shuffle.addEventListener("click", () => {
 el.clear.addEventListener("click", clearSelection);
 el.submit.addEventListener("click", submitSelection);
 el.playAgain.addEventListener("click", resetGame);
+el.boxScoreCopy.addEventListener("click", copyBoxScore);
+el.boxScoreShare.addEventListener("click", shareBoxScore);
 
 el.detailsClose.addEventListener("click", closeDetailsPopup);
 el.modal.addEventListener("click", event => {

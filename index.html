@@ -101,6 +101,20 @@
         <span><strong>Tutti</strong>: every quartet in one take</span>
       </div>
       <ol id="end-groups" class="program-list"></ol>
+      <div class="box-score">
+        <h3>Your box score</h3>
+        <pre id="box-score-rows" class="box-score-rows" aria-describedby="box-score-key"></pre>
+        <p id="box-score-key" class="box-score-key">One row per guess, in the order you picked the words.
+          <span class="nowrap"><span class="note-glyph">&#x2669;</span> Bass</span>
+          <span class="nowrap"><span class="note-glyph">&#x266A;</span> Tenor</span>
+          <span class="nowrap"><span class="note-glyph">&#x266B;</span> Alto</span>
+          <span class="nowrap"><span class="note-glyph">&#x266C;</span> Soprano</span></p>
+        <div class="controls">
+          <button id="box-score-copy" type="button" class="quiet-btn">Copy results</button>
+          <button id="box-score-share" type="button" class="quiet-btn hidden">Share</button>
+        </div>
+        <textarea id="box-score-fallback" class="export-out hidden" rows="10" readonly aria-label="Your results to copy"></textarea>
+      </div>
       <div class="controls">
         <button id="play-again-btn" type="button">Perform again</button>
         <a id="end-back" class="button-link secondary" href="index.html">Back to Repertoire</a>
@@ -293,6 +307,7 @@
           <li><strong>Tutti</strong>: before you start, you can sort all sixteen words into four rows and submit once. Get every row right for a <strong>Bravo!</strong> Any right rows carry over, and play continues as normal.</li>
           <li><strong>Rehearse</strong> mixes up the board. <strong>Clear</strong> deselects everything.</li>
           <li>Tap a solved quartet to read its backstory, if it has one.</li>
+          <li>At the end, copy your <strong>box score</strong> to share: one row per guess, with each word shown as its voice's note, from a plain quarter note &#x2669; (Bass) to busy sixteenths &#x266C; (Soprano). It never gives away the words.</li>
         </ul>
         <button id="help-close-btn" type="button">Got it</button>
       </div>
