@@ -893,6 +893,12 @@ function boxScoreLegend() {
   return VOICES.map(v => `${VOICE_NOTES[v]} ${VOICE_LABELS[v]}`).join("  ");
 }
 
+// The game's version, from the version tag in index.html.
+function gameVersion() {
+  const meta = document.querySelector('meta[name="version"]');
+  return meta ? meta.content.trim() : "";
+}
+
 // The address that brings a friend to this same puzzle, or "" for a puzzle
 // that only exists in this browser (Compose's Try it out).
 function puzzleShareUrl() {
@@ -906,7 +912,9 @@ function boxScoreText(won, found) {
   const result = tuttiBravo ? "Bravo! All four quartets in one take"
     : won ? `Standing ovation, ${bumNotes}`
     : `The curtain fell, ${found} of 4 quartets`;
-  const lines = [`Quartets of You: ${puzzle.title || "a puzzle"}`, result, boxScoreLegend()];
+  const version = gameVersion();
+  const name = version ? `Quartets of You v${version}` : "Quartets of You";
+  const lines = [`${name}: ${puzzle.title || "a puzzle"}`, result, boxScoreLegend()];
   const tutti = guesses.filter(g => g.tutti);
   const standard = guesses.filter(g => !g.tutti);
   if (tutti.length) {
