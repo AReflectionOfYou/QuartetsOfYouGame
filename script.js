@@ -881,11 +881,18 @@ const VOICE_NOTES = {
   soprano: "\u266C"    // ♬ two beamed sixteenth notes
 };
 
-// Messaging apps draw these notes from fallback fonts, so their widths can
-// differ a little between devices; plain text can't guarantee equal widths.
-// Tested in Messages on iPhone: plain spaces line up best.
+// Messaging apps draw these notes from fallback fonts, so their widths
+// differ. On Apple devices ♩ ♫ ♬ come from Hiragino (15.7 pt at 17 pt text)
+// but ♪ comes from Helvetica Neue (8.5 pt). A four-per-em space on each side
+// brings ♪ to 16.2 pt, so rows line up in Messages. Other devices may still be
+// slightly uneven: plain text can't guarantee equal widths everywhere.
+const NOTE_PADDING = { tenor: "\u2005" };
+
 function boxScoreRow(voices) {
-  return voices.map(v => VOICE_NOTES[v]).join(" ");
+  return voices.map(v => {
+    const pad = NOTE_PADDING[v] || "";
+    return pad + VOICE_NOTES[v] + pad;
+  }).join(" ");
 }
 
 // One line that says which note is which voice, for the shared text.
