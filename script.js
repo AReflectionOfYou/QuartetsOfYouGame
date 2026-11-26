@@ -926,11 +926,26 @@ let boxScore = "";
 
 function showBoxScore(won, found) {
   boxScore = boxScoreText(won, found);
-  // Show the rows (not the title and link, which the page already shows).
-  el.boxScoreRows.textContent = boxScore.split("\n")
-    .filter(line => line !== boxScoreLegend() &&
-      (line === "" || line === "Tutti" || [...line].some(ch => Object.values(VOICE_NOTES).includes(ch))))
-    .join("\n").trim();
+  // Show the rows (not the title, legend and link, which the page already
+  // shows). Each note gets its own fixed-width cell: the notes come from
+  // fallback fonts and differ in width, so plain text wouldn't line up.
+  const rowNode = g => {
+    const row = document.createElement("div");
+    row.className = "box-row";
+    row.setAttribute("role", "img");
+    row.setAttribute("aria-label", g.voices.map(v => VOICE_LABELS[v]).join(", "));
+    g.voices.forEach(v => row.appendChild(text("span", VOICE_NOTES[v], "note-cell")));
+    return row;
+  };
+  const tutti = guesses.filter(g => g.tutti);
+  const standard = guesses.filter(g => !g.tutti);
+  el.boxScoreRows.replaceChildren();
+  if (tutti.length) {
+    el.boxScoreRows.appendChild(text("div", "Tutti", "box-label"));
+    tutti.forEach(g => el.boxScoreRows.appendChild(rowNode(g)));
+    if (standard.length) el.boxScoreRows.appendChild(text("div", "", "box-gap"));
+  }
+  standard.forEach(g => el.boxScoreRows.appendChild(rowNode(g)));
   el.boxScoreCopy.textContent = "Copy results";
   el.boxScoreShare.classList.toggle("hidden", typeof navigator.share !== "function");
   el.boxScoreFallback.classList.add("hidden");
