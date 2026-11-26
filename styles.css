@@ -342,14 +342,12 @@ button.secondary, .button-link.secondary { background: #6f625b; color: #fff; }
 .box-score-rows, .note-glyph {
   font-family: "Apple Symbols", "Segoe UI Symbol", "Noto Sans Symbols 2", "Noto Sans Symbols", "DejaVu Sans", sans-serif;
 }
-.box-score-rows {
-  margin: 0 0 8px;
-  font-size: 1.7rem;
-  line-height: 1.25;
-  letter-spacing: .08em;
-  white-space: pre;
-  overflow-x: auto;
-}
+.box-score-rows { margin: 0 0 8px; font-size: 1.7rem; line-height: 1.25; }
+.box-row { display: flex; justify-content: center; }
+/* One fixed-width cell per note: the note glyphs differ in width. */
+.note-cell { width: 1.3em; text-align: center; }
+.box-label { font-family: var(--font-ui); font-size: .95rem; font-weight: 700; color: var(--muted); margin-bottom: 2px; }
+.box-gap { height: .6em; }
 .box-score-key { margin: 0 0 12px; color: var(--muted); font-size: .85rem; line-height: 1.6; }
 .note-glyph { font-size: 1.25rem; vertical-align: -0.15em; }
 .nowrap { white-space: nowrap; margin-left: 6px; }
