@@ -9,8 +9,8 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect x=%2210%22 y=%2210%22 width=%2280%22 height=%2216%22 rx=%224%22 fill=%22%23F9D3B4%22/><rect x=%2210%22 y=%2232%22 width=%2280%22 height=%2216%22 rx=%224%22 fill=%22%23E3892B%22/><rect x=%2210%22 y=%2254%22 width=%2280%22 height=%2216%22 rx=%224%22 fill=%22%23A3401D%22/><rect x=%2210%22 y=%2276%22 width=%2280%22 height=%2216%22 rx=%224%22 fill=%22%235A1A22%22/></svg>" />
   <!-- Version: when you change the game, bump the number here, in the ?v= links
        below and in the footer, so browsers fetch the new files. -->
-  <meta name="version" content="1.4.2" />
-  <link rel="stylesheet" href="styles.css?v=1.4.2" />
+  <meta name="version" content="1.5.0" />
+  <link rel="stylesheet" href="styles.css?v=1.5.0" />
   <!-- GoatCounter (cookie-free analytics) -->
   <script data-goatcounter="https://maherou-areflectionofyou.goatcounter.com/count"
           async src="//gc.zgo.at/count.js"></script>
@@ -324,11 +324,12 @@
     <span aria-hidden="true">&middot;</span>
     <button id="about-btn" type="button" class="about-link" aria-haspopup="dialog">About</button>
     <span aria-hidden="true">&middot;</span>
-    <span class="version">Version 1.4.2</span>
+    <span class="version">Version 1.5.0</span>
   </footer>
 
   <dialog id="about-dialog" class="about-dialog" aria-label="About">
     <div class="about-content">
+      <p class="muted small">Quartets of You &middot; Version <span id="about-version"></span></p>
       <p>&copy; 2026 Michael A. Heroux</p>
       <p>Code is MIT licensed. Everything else is CC BY 4.0.</p>
       <p class="muted small">Puzzle packs loaded from other sites belong to their authors, who choose their license.</p>
@@ -336,11 +337,26 @@
         <a href="https://opensource.org/license/mit" target="_blank" rel="noopener">MIT License</a>
         <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>
       </p>
+      <p><button id="problems-btn" type="button" class="about-link about-problems" aria-haspopup="dialog">Having problems?</button></p>
       <button id="about-close-btn" type="button">Close</button>
     </div>
   </dialog>
 
-  <script src="pack-rules.js?v=1.4.2"></script>
-  <script src="script.js?v=1.4.2"></script>
+  <dialog id="report-dialog" class="about-dialog" aria-labelledby="report-title">
+    <div class="about-content">
+      <h2 id="report-title" class="report-title">Having problems?</h2>
+      <p>Would you like to report an issue? We'll open a new issue for Quartets of You on GitHub in a new tab,
+        with the game's version and your browser filled in. Then describe what went wrong.</p>
+      <p class="muted small">Reporting an issue requires a free GitHub account.</p>
+      <div class="report-actions">
+        <button id="report-cancel-btn" type="button" class="quiet-btn">Not now</button>
+        <a id="report-go" class="button-link" href="https://github.com/AReflectionOfYou/QuartetsOfYouGame/issues/new"
+           target="_blank" rel="noopener">Report an issue</a>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="pack-rules.js?v=1.5.0"></script>
+  <script src="script.js?v=1.5.0"></script>
 </body>
 </html>

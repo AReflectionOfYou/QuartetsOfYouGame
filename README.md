@@ -58,7 +58,7 @@ To add a puzzle to this repo's built-in Repertoire, put its file in [puzzles/](p
 
 ## Versions
 
-The game's version appears at the bottom of every screen, so you can tell which release a browser is running. When you change the game, bump the number in [index.html](index.html): in the `version` meta tag, in the `?v=` on the stylesheet and script links, and in the footer. The `?v=` change makes browsers fetch the new files instead of a saved copy. A check on every push makes sure all the copies match.
+The game's version appears at the bottom of every screen and in the About panel, so you can tell which release a browser is running. About also has a **Having problems?** link that offers to open a new GitHub issue for the game with the version and browser filled in (reporting an issue needs a GitHub account). When you change the game, bump the number in [index.html](index.html): in the `version` meta tag, in the `?v=` on the stylesheet and script links, and in the footer. The `?v=` change makes browsers fetch the new files instead of a saved copy. A check on every push makes sure all the copies match.
 
 ## Accessibility
 
