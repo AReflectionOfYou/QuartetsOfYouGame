@@ -1732,15 +1732,37 @@ document.addEventListener("keydown", event => {
   if (!el.helpModal.classList.contains("hidden")) closeHelpModal();
 });
 
-// About: a small dialog with the copyright and licenses. It only opens and
-// closes; it never touches game state, timers or storage.
+// About: a small dialog with the version, copyright and licenses, and a
+// "Having problems?" link. These only open and close; they never touch game
+// state, timers or storage.
 const aboutDialog = $("about-dialog");
-$("about-btn").addEventListener("click", () => aboutDialog.showModal());
-$("about-close-btn").addEventListener("click", () => aboutDialog.close());
-aboutDialog.addEventListener("click", event => {
-  // The content fills the dialog box, so a click on the dialog itself is the backdrop.
-  if (event.target === aboutDialog) aboutDialog.close();
+const reportDialog = $("report-dialog");
+$("about-btn").addEventListener("click", () => {
+  $("about-version").textContent = gameVersion() || "unknown";
+  aboutDialog.showModal();
 });
+$("about-close-btn").addEventListener("click", () => aboutDialog.close());
+
+// Having problems?: offers to open a new GitHub issue for this game, with the
+// version and browser filled in.
+function issueUrl() {
+  const body = "**What happened?**\n\n\n**What did you expect to happen?**\n\n\n" +
+    `---\nGame: Quartets of You ${gameVersion() || "(unknown version)"}\nBrowser: ${navigator.userAgent}`;
+  return `https://github.com/AReflectionOfYou/QuartetsOfYouGame/issues/new?body=${encodeURIComponent(body)}`;
+}
+$("problems-btn").addEventListener("click", () => {
+  aboutDialog.close();
+  $("report-go").href = issueUrl();
+  reportDialog.showModal();
+});
+$("report-cancel-btn").addEventListener("click", () => reportDialog.close());
+// The link opens GitHub in a new tab; close the panel behind it.
+$("report-go").addEventListener("click", () => reportDialog.close());
+
+[aboutDialog, reportDialog].forEach(dialog => dialog.addEventListener("click", event => {
+  // The content fills the dialog box, so a click on the dialog itself is the backdrop.
+  if (event.target === dialog) dialog.close();
+}));
 
 if (qs.has("compose")) {
   if (qs.get("compose") === "form") showCompose(); else showComposeHelp();

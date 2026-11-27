@@ -608,6 +608,10 @@ input[type="file"] { font: inherit; font-size: .9rem; }
 .about-links { display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; }
 .about-links a { color: var(--accent); }
 .about-content button { margin-top: 6px; }
+.about-content .about-problems { margin-top: 0; color: var(--accent); }
+.report-title { margin: 0 0 12px; font-size: 1.3rem; }
+.report-actions { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 6px; }
+.report-actions .button-link { margin-top: 6px; }
 
 @media (max-width: 560px) {
   .app { padding-top: 18px; }
